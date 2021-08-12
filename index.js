@@ -22,6 +22,7 @@ class MercedEvents {
   }
 
   emit(event, data) {
+      let context = this.context
     if (this.events[event]) {
       // check if handlers exist for this event
       this.events[event].forEach((handler) => handler({ data, context })); // run each handler
@@ -30,15 +31,15 @@ class MercedEvents {
 
   async $emit(event, data) {
     let middleware;
+    let context = this.context
     if (this.middleware[event]) {
-      // check if handlers exist for this event
-      middleware = await this.middleware[event].map(
-        async (handler) => await handler({ data, context })
-      ); // run each handler
+      // run all middleware and resolve all promises
+      middleware = await Promise.all(this.middleware[event].map(
+        async (middl) => await middl({ data, context }))) 
     }
     if (this.events[event]) {
       // check if handlers exist for this event
-      this.events[event].forEach((handler) =>
+      await this.events[event].forEach((handler) =>
         handler({ data, context, middleware })
       ); // run each handler
     }

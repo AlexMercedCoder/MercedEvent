@@ -1,6 +1,6 @@
 {
   "name": "mercedevents",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Specialized EventEmitter Class with Asynchronous Middleware",
   "main": "index.js",
   "scripts": {
