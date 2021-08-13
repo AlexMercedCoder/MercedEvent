@@ -1,4 +1,4 @@
-const MercedEvents = require("./index");
+const {MercedEvents} = require("./index");
 
 // Create a New MercedEvents Object
 const ME = new MercedEvents();

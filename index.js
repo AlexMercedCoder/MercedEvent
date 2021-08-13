@@ -58,4 +58,13 @@ class MercedEvents {
   }
 }
 
-module.exports = MercedEvents;
+const createEvent = () => {
+  const handlers = []; // holders handlers
+  const on = (handler) => handlers.push(handler); // register handlers
+  const emit = (data) => handlers.forEach((handler) => handler(data)); // emit event
+  const clear = () => handlers.splice(0, handlers.length);
+
+  return [on, emit, clear]; // return functions
+};
+
+module.exports = { MercedEvents, createEvent };

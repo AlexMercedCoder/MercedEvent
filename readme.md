@@ -1,9 +1,9 @@
 # MercedEvents
 
-To See an Example of this libraries use refer to this code:
+To See an Example of the MercedEvents class use refer to this code (read further for the createEvent function):
 
 ```js
-const MercedEvents = require("mercedevents");
+const { MercedEvents } = require("mercedevents");
 
 // Create a New MercedEvents Object
 const ME = new MercedEvents();
@@ -62,3 +62,19 @@ Emit the event without invoking middleware. This function is synchronous. The op
 
 **instance.$emit(event, data)**
 Emit the event and invoke the middleware prior. This function is asynchronous and the handlers won't run till all promises from middleware have resolved. The optional data argument will made available to all handlers.
+
+# createEvent
+
+For really basic event purposes this functional approach to event may be just what you need.
+
+```js
+const { createEvent } = require("mercedevents");
+
+const [on, emit, clear] = createEvent();
+
+on((data) => console.log(data)); // register handler
+
+emit({ cheese: "gouda" }); // emit event
+
+clear(); // clear handlers
+```
