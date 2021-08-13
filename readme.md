@@ -37,3 +37,28 @@ ME.emit("customevent", { data: "bread" });
 // emit event with middleware and send data to handlers
 ME.$emit("customevent", { data: "Weeeeee" });
 ```
+
+## Properties
+
+- **this.events:** objects of all event listeners
+- **this.middleware:** objects of all event middleware (function that run before events of a particular type, their return values are made available to events as an array)
+- **this.context:** A Map object that can be used to store data that should be available to all event listeners
+
+## Methods
+
+**instance.on(event: String, handler: Function )**
+Will register the function as a listener for the particular event. The function signature for a handler...
+`({data, context, middleware}) => {}`
+
+**instance.onMiddleware(event: String, middleware: Function)**
+Will register the function as middleware that is always run before handlers for that event are run, each middlewares return value is stored in an array that is passed to the event handler. These are good to store logic that is shared between handlers of the same event type. Their signature...
+`({data, context}) => {}`
+
+**instance.clear({event: String, middleware: Boolean, events: Boolean})**
+Will clear all middleware and/or handlers for a particular events depending on whether the argument objects middleware or events property is true.
+
+**instance.emit(event, data)**
+Emit the event without invoking middleware. This function is synchronous. The optional data argument will made available to all handlers.
+
+**instance.$emit(event, data)**
+Emit the event and invoke the middleware prior. This function is asynchronous and the handlers won't run till all promises from middleware have resolved. The optional data argument will made available to all handlers.
