@@ -67,4 +67,27 @@ const createEvent = () => {
   return [on, emit, clear]; // return functions
 };
 
-module.exports = { MercedEvents, createEvent };
+class SimpleEvent {
+  constructor(initialData = {}) {
+    this.data = initialData;
+    this.handlers = [];
+  }
+
+  on(handler) {
+    this.handlers.push(handler);
+
+    return () => {
+      this.handlers.splice(
+        this.handlers.findIndex((h) => h === handler),
+        1
+      );
+    };
+  }
+
+  emit() {
+    const data = this.data;
+    this.handlers.forEach((handler) => handler(data));
+  }
+}
+
+module.exports = { MercedEvents, createEvent, SimpleEvent };

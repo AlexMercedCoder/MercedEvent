@@ -78,3 +78,30 @@ emit({ cheese: "gouda" }); // emit event
 
 clear(); // clear handlers
 ```
+
+# SimpleEvent
+
+A class based tool for very simple event generation.
+
+```js
+const {SimpleEvent} = require("mercedevents");
+
+//create an event
+const State = new SimpleEvent({name: "Alex Merced"})
+
+// Register a listener
+const removeListener = State.on((data) => {console.log(data.name)})
+
+// emit event
+State.emit()
+
+//change data
+State.data.name = "Awesome Guy"
+
+//emit event
+State.emit()
+
+//remove listener
+removeListener()
+
+```
